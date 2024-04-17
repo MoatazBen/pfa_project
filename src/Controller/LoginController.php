@@ -17,64 +17,19 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class LoginController extends AbstractController
 {
-    private $passwordEncoder;
-    public function __construct(UserPasswordHasherInterface $passwordEncoder)
-    {
-        $this->passwordEncoder = $passwordEncoder;
-    }
-
+    
     #[Route('/login', name: 'app_login')]
     public function index(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-
 dump($error);
 
-        return $this->render('login/index.html.twig', [
+        return $this->render('login/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
     }
 
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, EntityManagerInterface $manager): Response
-    {
-        $formRegister = $this->createFormBuilder()
-            ->add('name', TextType::class, [
-                'label' => 'Name',
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'Email',
-            ])
-            ->add('phone', TextType::class, [
-                'label' => 'Phone',
-            ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Password',
-            ])
-            ->getForm();
-
-        $formRegister->handleRequest($request);
-
-        if ($formRegister->isSubmitted() && $formRegister->isValid()) {
-            $userData = $formRegister->getData();
-            $user = new User();
-            $user->setName($userData['name']);
-            $user->setEmail($userData['email']);
-            $user->setPhone($userData['phone']);
-            $encodedPassword = $this->passwordEncoder->hashPassword($user, $userData['password']);
-            $user->setPassword($encodedPassword);
-           
-            $manager->persist($user);
-            $manager->flush();
-            $this->addFlash('success', 'Your account has been created successfully. You can now log in.');
-            return $this->redirectToRoute('app_login');
-        }
-
-        return $this->render('register/index.html.twig', [
-            'form_register' => $formRegister->createView(),
-        ]);
-    }
 }
