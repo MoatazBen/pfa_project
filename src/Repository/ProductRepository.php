@@ -25,7 +25,7 @@ class ProductRepository extends ServiceEntityRepository
      * @return Product[]
 
      */
-    public function findAllWithDescription($sortDirection = 'ASC'): array
+    public function findAllWithDescription(): array
 
     {
 
@@ -38,7 +38,7 @@ class ProductRepository extends ServiceEntityRepository
 
             FROM App\Entity\Product p
 
-            ORDER BY p.description ' . $sortDirection
+            ORDER BY p.description ASC'
 
         );
 
@@ -46,6 +46,29 @@ class ProductRepository extends ServiceEntityRepository
         // returns an array of Product objects
 
         return $query->getResult();
+
+    }
+
+
+    public function findAllWithFakeData(): array
+
+    {
+
+        $product1 = new Product();
+
+        $product1->setProductName('Product 1');
+
+        $product1->setPrice(10.99);
+
+
+        $product2 = new Product();
+
+        $product2->setProductName('Product 2');
+
+        $product2->setPrice(15.99);
+
+
+        return [$product1, $product2];
 
     }
 
