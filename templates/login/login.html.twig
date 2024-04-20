@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
-
 {% block body %}
 <form method="post">
     {% if error %}
@@ -13,7 +12,6 @@
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
-
     <section class="my-account-area ptb-100">
         <div class="container">
             <div class="row">
