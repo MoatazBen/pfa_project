@@ -20,6 +20,34 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
+    /**
+
+     * @return Product[]
+
+     */
+    public function findAllWithDescription($sortDirection = 'ASC'): array
+
+    {
+
+        $entityManager = $this->getEntityManager();
+
+
+        $query = $entityManager->createQuery(
+
+            'SELECT p
+
+            FROM App\Entity\Product p
+
+            ORDER BY p.description ' . $sortDirection
+
+        );
+
+
+        // returns an array of Product objects
+
+        return $query->getResult();
+
+    }
 
 //    /**
 //     * @return Product[] Returns an array of Product objects
