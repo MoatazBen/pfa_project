@@ -10,13 +10,15 @@
 
 <div class="example-wrapper">
     <h1>Welcome to our store!</h1>
+    {% if products is defined and products is not empty %}
     <ul>
         {% for product in products %}
-
-            <li>{{ product.name }} - {{ product.price }}</li>
-
+            <li>{{ product.productName }} - {{ product.price }}</li>
         {% endfor %}
-
+        {% dump(products) %}
     </ul>
+{% else  %}
+    <p>No products found.</p>
+{% endif %}
 </div>
 {% endblock %}
