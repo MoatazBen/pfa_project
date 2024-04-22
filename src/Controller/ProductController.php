@@ -52,7 +52,7 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('app_product_list');
         }
 
-        return $this->render('product/new.html.twig', [
+        return $this->render('home/index.html.twig', [
             'form' => $form,
         ]);
     }
@@ -76,18 +76,19 @@ class ProductController extends AbstractController
          ]);
  
      }*/
-     public function home(ProductRepository $productRepository): Response
-
-     {
- 
-         $products = $productRepository->findAllWithFakeData();
- 
- 
-         return $this->render('home/index.html.twig', [
- 
-             'products' => $products,
- 
-         ]);
- 
-     }
+     public function home(ProductRepository $productRepository): Response {
+        $products = $productRepository->findAllWithDescription(); // Fetch actual product data
+        dump($products); // Add this line for debugging
+        if (empty($products)) {
+            // Handle the case when there are no products
+            $message = 'There are no products to display.';
+            return $this->render('home/index.html.twig', [
+                'message' => $message,
+            ]);
+        }
+        return $this->render('home/index.html.twig', [
+            'products' => $products,
+        ]);
+    }
+    
 }
