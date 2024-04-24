@@ -3,3 +3,8 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+    # config/routes.yaml
+choix_service:
+        path: /choix-service
+        controller: App\Controller\ChoixServiceController::index
+

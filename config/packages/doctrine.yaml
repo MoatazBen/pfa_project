@@ -28,6 +28,22 @@ when@test:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
             dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            # config/packages/test/doctrine.yaml
+        default_connection: default
+        connections:
+            default:
+                driver: 'pdo_sqlite'
+                path: '%kernel.project_dir%/var/test_database.db'
+    orm:
+        auto_generate_proxy_classes: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App
+
 
 when@prod:
     doctrine:

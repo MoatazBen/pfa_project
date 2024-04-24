@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choix du Service{% endblock %}
+
+{% block body %}
+    <h1>Choisissez un service :</h1>
+    <ul>
+        {% for service in services %}
+            <li>{{ service.NameService }} - Statut: {{ service.StatutService }} - Prix: {{ service.PriceService }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
